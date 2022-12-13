@@ -1,0 +1,46 @@
+{
+	// Image or Dockerfile specific properties
+	"name": "SpringbootDeveloper",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"args": {
+			// Development Containers Images(Linux Universal)
+			// https://github.com/devcontainers/images/tree/main/src/java
+			"VERSION_TAG": "17",
+			"GRADLE_VERSION": "7.6",
+			"SPRINGBOOT_VERSION": "3.0.0"
+		}
+	},
+
+	// General devcontainer.json properties
+	"remoteEnv": { 
+		"TZ":"Asia/Tokyo",
+		"LANG":"ja_JP.UTF-8",
+		"LANGUAGE":"ja_JP:ja"
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Pivotal.vscode-boot-dev-pack",
+				"richardwillis.vscode-gradle-extension-pack"
+			]
+		}
+	}
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
