@@ -16,15 +16,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class Test {
+public class Saml2Configuration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        DefaultRelyingPartyRegistrationResolver relyingPartyRegistrationResolver =
-        new DefaultRelyingPartyRegistrationResolver(this.relyingPartyRegistrations());
-        Saml2MetadataFilter filter = new Saml2MetadataFilter(
-        relyingPartyRegistrationResolver,
-        new OpenSamlMetadataResolver());
+        DefaultRelyingPartyRegistrationResolver relyingPartyRegistrationResolver 
+            = new DefaultRelyingPartyRegistrationResolver(this.relyingPartyRegistrations());
+        Saml2MetadataFilter filter 
+            = new Saml2MetadataFilter(relyingPartyRegistrationResolver, new OpenSamlMetadataResolver());
         http
             .authorizeHttpRequests(authorize -> authorize
                 .anyRequest().authenticated()
