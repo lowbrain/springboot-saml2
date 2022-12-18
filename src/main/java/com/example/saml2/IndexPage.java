@@ -2,18 +2,21 @@ package com.example.saml2;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.saml2.provider.service.authentication.Saml2AuthenticatedPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class IndexPage {
-    
-    @GetMapping("/")
-    public String index(Model model, @AuthenticationPrincipal Saml2AuthenticatedPrincipal principal) {
-		String emailAddress = principal.getFirstAttribute("email");
-		model.addAttribute("emailAddress", emailAddress);
-		model.addAttribute("userAttributes", principal.getAttributes());
-		return "index";
-	}
+
+  @RequestMapping("/")
+  public AuthData index(@AuthenticationPrincipal Saml2AuthenticatedPrincipal principal) {
+    AuthData data = AuthData.builder()
+        .name(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"))
+        .emailaddress(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"))
+        .givenname(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"))
+        .surname(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"))
+        .build();
+    return data;
+  }
+  
 }
