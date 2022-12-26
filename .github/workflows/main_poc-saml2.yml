@@ -22,13 +22,13 @@ jobs:
           java-version: '17'
 
       - name: Build with Gradle
-        run: gradle clean bootjar
+        run: ./gradlew clean bootjar
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: 'build/*.jar'
+          path: '${{ github.workspace }}/build/*.jar'
 
   deploy:
     runs-on: windows-latest
