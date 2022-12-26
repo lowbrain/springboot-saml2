@@ -21,11 +21,14 @@ jobs:
         with:
           java-version: '17'
 
+      - name: Build with Gradle0
+        run: ls -R
+
       - name: Build with Gradle
         run: ./gradlew clean bootjar
 
       - name: Build with Gradle1
-        run: dir /s
+        run: ls -R
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
