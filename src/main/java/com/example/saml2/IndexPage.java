@@ -17,8 +17,8 @@ public class IndexPage {
         .givenname(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"))
         .surname(principal.getAttribute("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"))
         .build();
+    model.addAttribute("name", data.getName());
     model.addAttribute("authInfo", data);
     return "index";
   }
-  
 }
