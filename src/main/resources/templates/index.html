@@ -13,7 +13,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             const authInfo = /*[[${authInfo}]]*/ null;
             console.log(authInfo);
-            window.opener.postMessage(authInfo, "*");
+            window.opener.postMessage("saml2", "*");
         });
     </script>
 </head>
