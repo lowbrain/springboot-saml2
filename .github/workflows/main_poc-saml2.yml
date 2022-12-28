@@ -26,8 +26,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_OUTPUT
-            echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_OUTPUT
+            echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
+            echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
 
       - name: Set up Java version
         uses: actions/setup-java@v1
@@ -36,9 +36,6 @@ jobs:
 
       - name: Build with Gradle
         run: gradle clean bootjar
-        env:
-          SAML2_CONFIG_ID: ${{ steps.keyvault.outputs.id }}
-          SAML2_CONFIG_LOCATION: ${{ steps.keyvault.outputs.location }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
