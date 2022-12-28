@@ -26,8 +26,12 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
-            echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
+            echo "SAML2_CONFIG_ID=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
+            echo "SAML2_CONFIG_LOCATION=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: "pwa-key"
+          secrets: 'pocSamlId, pocSamlLocation'
 
       - name: Set up Java version
         uses: actions/setup-java@v1
