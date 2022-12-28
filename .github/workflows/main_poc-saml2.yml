@@ -16,30 +16,29 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Azure CLI script
-        id: keyvault
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            echo "SAML2_CONFIG_ID=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
-            echo "SAML2_CONFIG_LOCATION=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_ENV
-      - uses: Azure/get-keyvault-secrets@v1
-        with: 
-          keyvault: "pwa-key"
-          secrets: 'pocSamlId, pocSamlLocation'
-
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
           java-version: '17'
 
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure KeyVault
+        id: keyvault
+        uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: "pwa-key"
+          secrets: 'pocSamlId, pocSamlLocation'
+
       - name: Build with Gradle
         run: gradle clean bootjar
+        with:
+          env:
+            SAML2_CONFIG_ID: ${{ steps.keyvault.outputs.pocSamlId }}
+            SAML2_CONFIG_LOCATION: ${{ steps.keyvault.outputs.pocSamlLocation }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
