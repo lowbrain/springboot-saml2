@@ -26,8 +26,8 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output text)" >> $GITHUB_OUTPUT
-            echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output text)" >> $GITHUB_OUTPUT
+            echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output tsv)" >> $GITHUB_OUTPUT
+            echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output tsv)" >> $GITHUB_OUTPUT
 
       - name: Set up Java version
         uses: actions/setup-java@v1
@@ -47,7 +47,7 @@ jobs:
           path: '${{ github.workspace }}/build/libs/*.jar'
 
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     environment:
       name: 'Production'
