@@ -35,10 +35,9 @@ jobs:
 
       - name: Build with Gradle
         run: gradle clean bootjar
-        with:
-          env:
-            SAML2_CONFIG_ID: ${{ steps.keyvault.outputs.pocSamlId }}
-            SAML2_CONFIG_LOCATION: ${{ steps.keyvault.outputs.pocSamlLocation }}
+        env:
+          SAML2_CONFIG_ID: ${{ steps.keyvault.outputs.pocSamlId }}
+          SAML2_CONFIG_LOCATION: ${{ steps.keyvault.outputs.pocSamlLocation }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
