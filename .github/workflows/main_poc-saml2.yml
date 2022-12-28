@@ -31,13 +31,14 @@ jobs:
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "pwa-key"
-          secrets: 'pocSamlId, pocSamlLocation'
+          secrets: 'pocSamlId, pocSamlLocation, pocSamlRtnUrl'
 
       - name: Build with Gradle
         run: gradle clean bootjar
         env:
           SAML2_CONFIG_ID: ${{ steps.keyvault.outputs.pocSamlId }}
           SAML2_CONFIG_LOCATION: ${{ steps.keyvault.outputs.pocSamlLocation }}
+          SAML2_RETURN_URL: ${{ steps.keyvault.outputs.pocPwaUrl }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
