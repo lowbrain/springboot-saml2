@@ -12,8 +12,7 @@
     <script th:inline="javascript">
         window.addEventListener('DOMContentLoaded', () => {
             const authInfo = /*[[${authInfo}]]*/ null;
-            const retUrl = "/*[[${retUrl}]]*/ null";
-            window.opener.postMessage(authInfo, retUrl);
+            window.opener.postMessage(authInfo, /*[(${retUrl})]*/);
         });
     </script>
 </head>
