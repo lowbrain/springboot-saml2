@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,6 @@ jobs:
         id: keyvault
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.30.0
           inlineScript: |
             echo "id=$(az keyvault secret show --name pocSamlId --vault-name pwa-key --query value --output text)" >> $GITHUB_OUTPUT
             echo "location=$(az keyvault secret show --name pocSamlLocation --vault-name pwa-key --query value --output text)" >> $GITHUB_OUTPUT
