@@ -1,5 +1,6 @@
 package com.example.saml2;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class Saml2Configuration {
+
+    @Value("${saml2.config.location}")
+	private String metaDataLocation;
+
+    @Value("${saml2.config.id}")
+	private String registrationId;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -36,8 +43,8 @@ public class Saml2Configuration {
     @Bean
     public RelyingPartyRegistrationRepository relyingPartyRegistrations() {
         RelyingPartyRegistration registration = RelyingPartyRegistrations
-                .fromMetadataLocation("https://login.microsoftonline.com/0c8961ee-42a9-471b-9f8d-b002cd852be5/federationmetadata/2007-06/federationmetadata.xml?appid=c4f94dac-28ba-498e-85cd-75f142924f13")
-                .registrationId("sample")
+                .fromMetadataLocation(metaDataLocation)
+                .registrationId(registrationId)
                 .build();
         return new InMemoryRelyingPartyRegistrationRepository(registration);
     }

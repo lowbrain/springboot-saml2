@@ -12,7 +12,7 @@
     <script th:inline="javascript">
         window.addEventListener('DOMContentLoaded', () => {
             const authInfo = /*[[${authInfo}]]*/ null;
-            window.opener.postMessage(authInfo, "https://lowbrain.github.io/pwa-vue/");
+            window.opener.postMessage(authInfo, window.opener.location);
         });
     </script>
 </head>
